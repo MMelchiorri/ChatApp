@@ -30,6 +30,8 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     console.log(`Room Connected: ${data}`)
     socket.join(data)
+    console.log(data)
+    socket.to(data).emit("An user is entered",data)
 
   })
 

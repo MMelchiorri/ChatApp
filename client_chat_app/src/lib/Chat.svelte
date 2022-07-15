@@ -17,7 +17,7 @@
     export let socket: any;
     let current_message = "";
 
-    let array_of_messagge: string[] = [];
+    let array_of_messagge: any[] = [];
 
     const sendMessage = async () => {
         if (current_message != "") {
@@ -33,14 +33,21 @@
             };
 
             await socket.emit("send_message", message);
-            array_of_messagge = array_of_messagge.concat([message.message]);
+            array_of_messagge = array_of_messagge.concat([message]);
         }
     };
 
     socket.on("receive_message", (data) => {
-        array_of_messagge = array_of_messagge.concat([data.message]);
+        array_of_messagge = array_of_messagge.concat([data]);
         console.log(array_of_messagge);
     });
+
+    socket.on("An user is entered",(data)=>{
+        console.log(data)
+    })
+
+
+
 </script>
 
 <style>
@@ -54,7 +61,8 @@
             <h3>Welcome {username}</h3>
             {#each array_of_messagge as message}
             <div>
-                <p>{message}</p>
+                <span>{message.author}:</span>
+                <span>{message.message}</span>
             </div>
             {/each}
 
